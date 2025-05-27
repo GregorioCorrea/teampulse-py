@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:alpine
 
 # Evitá errores por falta de compiladores
 RUN apt-get update && apt-get install -y gcc build-essential
