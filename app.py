@@ -5,21 +5,17 @@ from aiohttp import web
 from botbuilder.core import (
     TurnContext,
     CloudAdapter,
-    ConfigurationBotFrameworkAuthentication
 )
+from botbuilder.integration.aiohttp import ConfigurationBotFrameworkAuthentication
 from botbuilder.schema import Activity, ActivityTypes
+
 from bot import MyBot
 from config import DefaultConfig
 
 CONFIG = DefaultConfig()
 
 # Autenticación con CloudAdapter
-bot_authentication = ConfigurationBotFrameworkAuthentication(
-    app_id=CONFIG.APP_ID,
-    app_password=CONFIG.APP_PASSWORD,
-    tenant_id=CONFIG.APP_TENANT_ID
-)
-
+bot_authentication = ConfigurationBotFrameworkAuthentication(CONFIG)
 adapter = CloudAdapter(bot_authentication)
 
 # Manejo de errores
@@ -54,7 +50,7 @@ async def messages(req: web.Request) -> web.Response:
     activity = Activity().deserialize(body)
     auth_header = req.headers.get("Authorization", "")
 
-    response = await adapter.process_activity(activity, auth_header, bot.on_turn)
+    response = await adapter.process_activity(auth_header, activity, bot.on_turn)
     return web.json_response(data=response.body, status=response.status) if response else web.Response(status=201)
 
 # Servidor
