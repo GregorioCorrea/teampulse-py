@@ -2,11 +2,8 @@ import sys
 import traceback
 from datetime import datetime
 from aiohttp import web
-from botbuilder.core import (
-    TurnContext,
-    CloudAdapter,
-)
-from botbuilder.integration.aiohttp import ConfigurationBotFrameworkAuthentication
+from botbuilder.core import TurnContext
+from botbuilder.integration.aiohttp import CloudAdapter, ConfigurationBotFrameworkAuthentication
 from botbuilder.schema import Activity, ActivityTypes
 
 from bot import MyBot
